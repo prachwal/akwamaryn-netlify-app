@@ -1,0 +1,129 @@
+@use 'sass:color' as color;
+@use '@styles/index.scss' as *;
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+
+  &__line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: $dark-text;
+    border-radius: 1px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+
+    &--top {
+      transform: translateY(0) rotate(0deg);
+    }
+
+    &--middle {
+      opacity: 1;
+    }
+
+    &--bottom {
+      transform: translateY(0) rotate(0deg);
+    }
+  }
+
+  &--open {
+    .hamburger__line {
+      &--top {
+        transform: translateY(8px) rotate(45deg);
+      }
+
+      &--middle {
+        opacity: 0;
+      }
+
+      &--bottom {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+    }
+  }
+
+  &:hover {
+    .hamburger__line {
+      background-color: $primary-color;
+    }
+  }
+
+  &:focus {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .hamburger {
+    &__line {
+      background-color: $light-text;
+    }
+
+    &:hover .hamburger__line {
+      background-color: color.scale($primary-color, $lightness: -10%);
+    }
+  }
+}
+
+// Responsive design for different screen sizes
+@media (max-width: $tablet) {
+  .hamburger {
+    width: 22px;
+    height: 16px;
+
+    &--open .hamburger__line {
+      &--top {
+        transform: translateY(7px) rotate(45deg);
+      }
+
+      &--bottom {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+    }
+  }
+}
+
+@media (max-width: $small) {
+  .hamburger {
+    width: 20px;
+    height: 14px;
+
+    &--open .hamburger__line {
+      &--top {
+        transform: translateY(6px) rotate(45deg);
+      }
+
+      &--bottom {
+        transform: translateY(-6px) rotate(-45deg);
+      }
+    }
+  }
+}
+
+// Orientation-specific adjustments
+@media (orientation: landscape) and (max-height: 500px) {
+  .hamburger {
+    width: 18px;
+    height: 12px;
+
+    &--open .hamburger__line {
+      &--top {
+        transform: translateY(5px) rotate(45deg);
+      }
+
+      &--bottom {
+        transform: translateY(-5px) rotate(-45deg);
+      }
+    }
+  }
+}

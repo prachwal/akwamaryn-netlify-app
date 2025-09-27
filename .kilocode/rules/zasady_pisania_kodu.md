@@ -7,10 +7,22 @@ Reguły obowiązujące w projekcie dotyczące jakości kodu, testowania i strukt
 ### Technologie Kluczowe
 
 - **Frontend**: Preact (nie React) z TypeScript i SCSS
-- **Narzędzie Budowania**: Vite z konfiguracją wyjściową do katalogu `dist/`
+- **Narzędzie Budowania**: Vite z konfiguracją wyjściową do katalogu `dist/` i aliasami ścieżek
 - **Zarządzanie Stanem**: Sklepy Zustand (zobacz `src/stores/`)
 - **Testowanie**: Vitest + Testing Library + jsdom
 - **Wdrożenie**: Netlify (build wychodzi do `dist/`)
+
+### Przegląd Architektury
+
+To jest aplikacja **Preact + Vite + TypeScript** z Zustand do zarządzania stanem. Uwaga: Projekt używa **Preact**, nie React, choć składnia jest prawie identyczna.
+
+#### Kluczowy Stack Technologiczny
+
+- **Frontend**: Preact (nie React) z TypeScript i SCSS
+- **Narzędzie Budowania**: Vite z własną konfiguracją i aliasami ścieżek
+- **Zarządzanie Stanem**: Sklepy Zustand (zobacz `src/stores/`)
+- **Testowanie**: Vitest + Testing Library + jsdom
+- **System UI**: Własna biblioteka komponentów w `src/UI/`
 
 ## Organizacja Projektu
 
@@ -24,11 +36,35 @@ src/
 │   ├── App.test.tsx  # Testy dla głównego komponentu
 │   └── components/
 │       └── features/     # Komponenty specyficzne dla funkcji aplikacji
-├── UI/               # Wielokrotnego użytku komponenty UI (przygotowane na wydzielenie jako osobny podkomponent)
+├── UI/
+│   ├── index.ts      # Główny barrel export komponentów UI
+│   ├── Card/         # Komponenty UI wielokrotnego użytku
+│   ├── Layout/       # Komponenty layout (Header, Main, Article, Section, Aside, Nav, Footer, Hamburger)
+│   └── styles/       # Globalne pliki CSS/SCSS (index.scss)
 ├── hooks/            # Własne hooki
 ├── stores/           # Sklepy Zustand
 ├── utils/            # Funkcje narzędziowe
-└── styles/           # Pliki CSS/SCSS
+└── types/            # Globalne definicje typów TypeScript
+```
+
+### Architektura Komponentów
+
+- **Warstwa Aplikacji**: Główna aplikacja w `src/App/` z layoutem i funkcjami
+- **System UI**: Wielokrotnego użytku komponenty w `src/UI/` - semantyczne elementy HTML (Header, Main, Article, Section, Aside, Nav, Footer, Card, Hamburger)
+- **Komponenty Funkcji**: Komponenty specyficzne dla domeny w `src/App/components/features/`
+- **Barrel Exports**: Używaj `src/UI/index.ts` do importowania wielu komponentów UI
+
+### Wzorzec Struktury Komponentu
+
+Każdy komponent UI powinien mieć własną strukturę folderów w `src/UI/ComponentName/`:
+
+```text
+ComponentName/
+├── ComponentName.tsx    # Logika komponentu
+├── ComponentName.scss   # Style komponentu
+├── ComponentName.test.tsx # Testy jednostkowe
+├── types.ts            # Interfejsy TypeScript
+└── index.ts            # Barrel export
 ```
 
 ### Komponenty
@@ -39,6 +75,14 @@ src/
 - Komponenty UI wielokrotnego użytku są w `src/UI/` (przygotowane na wydzielenie jako osobny podkomponent)
 - Każdy komponent ma własny folder: `ComponentName/ComponentName.tsx`, `ComponentName.scss`, `ComponentName.test.tsx`
 - Używaj nazwanych eksportów: `export function ComponentName()` nie domyślnych eksportów
+
+### System Layoutu Responsywnego
+
+- Używa CSS Grid i Flexbox z podejściem mobile-first
+- **Breakpoints**: `$small: 480px`, `$tablet: 768px`, `$desktop: 1024px`
+- **Wzorzec Layout**: Desktop ma sidebar + main, tablet/mobile stackują się pionowo z menu hamburger
+- **Typografia Fluid**: Używa `clamp()` dla responsywnych rozmiarów czcionek
+- **Menu Mobile**: Slide-in sidebar z overlay, zarządzane przez stan React
 
 ### Wzorzec Sklepu (Zustand)
 
@@ -68,8 +112,9 @@ export const useStoreName = create<StateInterface>((set) => ({
 Importy postępują zgodnie ze ścisłym porządkiem wymuszanym przez ESLint:
 
 1. Importy zewnętrzne biblioteki
-2. Importy wewnętrzne moduły (względne importy)
-3. Pusta linia między grupami
+2. Importy wewnętrzne moduły (używając aliasów ścieżek)
+3. Importy względne
+4. Pusta linia między grupami
 
 **Przykładowa struktura importów w plikach testowych:**
 
@@ -88,21 +133,21 @@ vi.mock('@hooks/useGeolocation', () => ({
 
 **Uwagi dla plików testowych:**
 
-- W plikach testowych, mocki hooków i komponentów są umieszczane po importach, przed definicjami testów.
+- W plikach testowych, mocki hooków i komponentów są umieszczane po wszystkich importach, przed definicjami testów.
 - Nie dodawaj pustej linii między grupami importów zewnętrznych i wewnętrznych w plikach testowych.
 
 ### Aliasy Ścieżek
 
 Używaj aliasów ścieżek dla krótszych i bardziej czytelnych importów:
 
-- `@/` - `src/`
-- `@components/` - `src/App/components/`
-- `@ui/` - `src/UI/`
-- `@stores/` - `src/stores/`
-- `@hooks/` - `src/hooks/`
-- `@utils/` - `src/utils/`
-- `@styles/` - `src/styles/`
-- `@mytypes/` - `src/types/`
+- `@/` → `src/`
+- `@components/` → `src/App/components/`
+- `@ui/` → `src/UI/`
+- `@stores/` → `src/stores/`
+- `@hooks/` → `src/hooks/`
+- `@utils/` → `src/utils/`
+- `@styles/` → `src/styles/`
+- `@mytypes/` → `src/types/`
 
 Przykład:
 
@@ -111,6 +156,38 @@ import { Counter } from '@components/features/Counter'
 import { useCounterStore } from '@stores/counterStore'
 import type { GeolocationResponse } from '@mytypes/index'
 ```
+
+## Wzorce Stylu Kodu
+
+### Wzorzec Komponentu
+
+```typescript
+/**
+ * Component description
+ * @param props - Props description
+ * @returns JSX element
+ * @example
+ * ```tsx
+ * <ComponentName className="custom" />
+ * ```
+ */
+export function ComponentName({ className, ...rest }: ComponentProps) {
+  return <element className={`base-class ${className || ''}`} {...rest} />
+}
+```
+
+### Wzorce SCSS
+
+- Używaj `@use '../index.scss' as *;` dla design system variables
+- Responsive queries: mobile-first with min-width
+- Color functions: `color.scale()`, `color.change()` from Sass
+- CSS custom properties for theme variables
+- BEM-like class naming for components
+
+### Krytyczne Zmienne Globalne
+
+- `__APP_VERSION__` injected by Vite from package.json
+- Must be declared in vite-env.d.ts and mocked in tests
 
 ## Zasady TypeScript
 
@@ -124,6 +201,8 @@ import type { GeolocationResponse } from '@mytypes/index'
 
 ### Definicje Typów
 
+- Always define interfaces for props (even if empty)
+- Use `ComponentChildren` from 'preact' for child props
 - Używaj `interface` dla props komponentów i kształtów stanu
 - Używaj `type` dla unii i prostych transformacji typów
 - Używaj PascalCase dla typów, interfejsów, enumów i komponentów
@@ -165,23 +244,24 @@ import type { GeolocationResponse } from '@mytypes/index'
 
 ### Konwencje Testowania
 
-- Mockuj sklepy Zustand w testach używając `vi.mock()`
-- Mockuj globalną zmienną `__APP_VERSION__` w setupie testów
-- Używaj wzorców Testing Library: `screen.getByRole()`, `userEvent.setup()`
-- Pliki testów współlokalizowane z komponentami, używając sufiksu `.test.tsx`
+- Co-located tests using `.test.tsx` suffix
+- Mock Zustand stores: `vi.mock('@stores/storeName')`
+- Mock global `__APP_VERSION__` in test setup
+- Use Testing Library patterns: `screen.getByRole()`, `userEvent.setup()`
+- Global test setup in `src/test/setup.ts`
 
 ## Workflow Rozwoju
 
 ### Dostępne Komendy
 
-- `npm run dev` - Uruchom serwer deweloperski
-- `npm run build` - Zbuduj projekt do produkcji
-- `npm run preview` - Podgląd zbudowanej aplikacji
-- `npm run test` - Uruchom testy w trybie watch
-- `npm run test:ui` - Uruchom testy z dashboardem UI
-- `npm run coverage` - Generuj raporty pokrycia testami (wychodzi do `coverage/`)
-- `npm run docs` - Generuj dokumentację TypeDoc (wychodzi do `docs/`)
-- `npm run lint` / `npm run lint:fix` - Sprawdzanie/naprawianie ESLint
+- `npm run dev` - Dev server with HMR
+- `npm run build` - Production build (outputs to `dist/`)
+- `npm run preview` - Preview built application
+- `npm run test` - Tests in watch mode
+- `npm run test:ui` - Visual test dashboard
+- `npm run coverage` - Coverage reports to `public/coverage/`
+- `npm run docs` - Generate TypeDoc documentation (outputs to `docs/`)
+- `npm run lint:fix` - Auto-fix linting issues
 
 ### CI Pipeline
 
@@ -196,10 +276,18 @@ Projekt używa GitHub Actions dla automatycznego CI:
   - Budowanie projektu (wyjście do `dist/`)
   - Wysłanie raportów pokrycia do Codecov (format LCOV)
 
+### Kluczowe Pliki i Punkty Integracji
+
+- `src/UI/styles/index.scss` - Globalne style i zmienne systemu design
+- `src/UI/index.ts` - Główny barrel export komponentów UI
+- `vite.config.ts` - Aliasy ścieżek i konfiguracja build
+- `src/test/setup.ts` - Globalna konfiguracja testów
+- `src/App/App.scss` - Główny responsywny system layout
+
 ### Zmienne Globalne
 
-- `__APP_VERSION__` jest wstrzykiwana przez Vite z wersji package.json
-- Musi być zadeklarowana w globalnych ESLint i mockowana w testach
+- `__APP_VERSION__` wstrzykiwana przez Vite z wersji package.json
+- Musi być zadeklarowana w vite-env.d.ts i mockowana w testach
 
 ## Wydajność i Optymalizacja
 
@@ -248,6 +336,21 @@ Projekt używa GitHub Actions dla automatycznego CI:
 - Regularnie synchronizuj z główną branchą
 
 ## Historia Poprawek
+
+### Aktualizacja Dokumentacji na Podstawie Copilot Instructions
+
+- **Data**: 2025-09-27
+- **Opis**: Zaktualizowano `.kilocode/rules/zasady_pisania_kodu.md` na podstawie `.github/copilot-instructions.md` w celu zapewnienia spójności i kompletności dokumentacji projektu.
+- **Zmiany wprowadzone**:
+  - Dodano szczegółowy przegląd architektury projektu
+  - Rozszerzono opis struktury komponentów UI z wymienionymi komponentami
+  - Dodano sekcję "System Layoutu Responsywnego" z breakpointami i wzorcami layout
+  - Zaktualizowano wzorce stylu kodu z przykładami komponentów i SCSS
+  - Poprawiono konwencje testowania zgodnie z instrukcjami
+  - Dodano sekcję "Kluczowe Pliki i Punkty Integracji"
+  - Zaktualizowano komendy npm z angielskimi opisami
+  - Poprawiono informacje o zmiennych globalnych
+- **Powód**: Zapewnienie spójności między dokumentacją projektu a instrukcjami dla Copilot, co ułatwia utrzymanie i rozwój projektu.
 
 ### Poprawki Importów w Plikach Testowych
 

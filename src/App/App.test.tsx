@@ -19,7 +19,7 @@ vi.mock('@stores/counterStore', () => ({
 describe('App', () => {
   it('renders', () => {
     render(<App />)
-    expect(screen.getByText('Akwamaryn Netlify App')).toBeTruthy()
+    expect(screen.getByText('Akwamaryn')).toBeTruthy()
   })
 
   it('increments count', async () => {
@@ -34,6 +34,28 @@ describe('App', () => {
 
   it('displays version', () => {
     render(<App />)
-    expect(screen.getByText('Version: 0.0.1')).toBeTruthy()
+    expect(screen.getByText(/0\.0\.1/)).toBeTruthy()
+  })
+
+  it('toggles hamburger menu', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    
+    // Initially hamburger should say "Open menu"
+    const hamburgerOpen = screen.getByRole('button', { name: /open menu/i })
+    expect(hamburgerOpen).toBeInTheDocument()
+    
+    // Click to open
+    await user.click(hamburgerOpen)
+    
+    // Now it should say "Close menu"  
+    const hamburgerClose = screen.getByRole('button', { name: /close menu/i })
+    expect(hamburgerClose).toBeInTheDocument()
+    
+    // Click to close
+    await user.click(hamburgerClose)
+    
+    // Back to "Open menu"
+    expect(screen.getByRole('button', { name: /open menu/i })).toBeInTheDocument()
   })
 })

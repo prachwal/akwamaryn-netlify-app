@@ -6,20 +6,38 @@ This is a **Preact + Vite + TypeScript** application with Zustand for state mana
 
 ### Key Tech Stack
 - **Frontend**: Preact (not React) with TypeScript and SCSS
-- **Build Tool**: Vite with custom config that outputs to `public/` directory
+- **Build Tool**: Vite with custom config and path aliases
 - **State Management**: Zustand stores (see `src/stores/`)
 - **Testing**: Vitest + Testing Library + jsdom
-- **Deployment**: Netlify (build outputs to `public/`)
+- **UI System**: Custom component library in `src/UI/`
 
-## Project Structure Patterns
+## Project Structure & Patterns
 
-### Component Organization
-- Components live in `src/components/` with co-located styles and tests
-- Feature components go in `src/components/features/`
-- Each component has its own folder: `ComponentName/ComponentName.tsx`, `ComponentName.scss`, `ComponentName.test.tsx`
-- Use named exports: `export function ComponentName()` not default exports
+### Component Architecture
+- **App Layer**: Main application in `src/App/` with layout and features
+- **UI System**: Reusable components in `src/UI/` - semantic HTML elements (Header, Main, Article, Section, Aside, Nav, Footer, Card, Hamburger)
+- **Feature Components**: Domain-specific components in `src/App/components/features/`
+- **Barrel Exports**: Use `src/UI/index.ts` for importing multiple UI components
 
-### Store Pattern (Zustand)
+### Component Structure Pattern
+Each component follows this structure:
+```
+ComponentName/
+├── ComponentName.tsx    # Component logic
+├── ComponentName.scss   # Component styles  
+├── ComponentName.test.tsx # Unit tests
+├── types.ts            # TypeScript interfaces
+└── index.ts            # Barrel export
+```
+
+### Responsive Layout System
+- Uses CSS Grid and Flexbox with mobile-first approach
+- **Breakpoints**: `$small: 480px`, `$tablet: 768px`, `$desktop: 1024px`
+- **Layout Pattern**: Desktop has sidebar + main, tablet/mobile stack vertically with hamburger menu
+- **Fluid Typography**: Uses `clamp()` for responsive font sizes
+- **Mobile Menu**: Slide-in sidebar with overlay, managed by React state
+
+### State Management (Zustand)
 ```typescript
 // Follow this pattern in src/stores/
 export const useStoreName = create<StateInterface>((set) => ({
@@ -28,69 +46,75 @@ export const useStoreName = create<StateInterface>((set) => ({
 }))
 ```
 
+### Path Aliases (Vite + TypeScript)
+- `@/` → `src/`
+- `@components/` → `src/App/components/`
+- `@ui/` → `src/UI/`
+- `@stores/` → `src/stores/`
+- `@hooks/` → `src/hooks/`
+
 ### Import Organization
-Imports follow a strict order enforced by ESLint:
+Strict ESLint-enforced order:
 1. External libraries
-2. Internal modules (relative imports)
-3. Blank line between groups
+2. Internal modules (using path aliases)
+3. Relative imports
+4. Blank line between groups
 
 ## Development Workflow
 
-### Available Commands
-- `npm run dev` - Start dev server
-- `npm run test` - Run tests in watch mode
-- `npm run test:ui` - Run tests with UI dashboard
-- `npm run coverage` - Generate test coverage reports (outputs to `public/coverage/`)
-- `npm run docs` - Generate TypeDoc documentation (outputs to `public/docs/`)
-- `npm run lint` / `npm run lint:fix` - ESLint checking/fixing
+### Essential Commands
+- `npm run dev` - Dev server with HMR
+- `npm run build` - Production build (outputs to `dist/`)
+- `npm test` - Tests in watch mode
+- `npm run test:ui` - Visual test dashboard
+- `npm run coverage` - Coverage reports to `public/coverage/`
+- `npm run lint:fix` - Auto-fix linting issues
 
 ### Testing Conventions
-- Mock Zustand stores in tests using `vi.mock()`
-- Mock global `__APP_VERSION__` variable in test setup
+- Co-located tests using `.test.tsx` suffix
+- Mock Zustand stores: `vi.mock('@stores/storeName')`
+- Mock global `__APP_VERSION__` in test setup
 - Use Testing Library patterns: `screen.getByRole()`, `userEvent.setup()`
-- Test files co-located with components, using `.test.tsx` suffix
+- Global test setup in `src/test/setup.ts`
 
-### Global Variables
-- `__APP_VERSION__` is injected by Vite from package.json version
-- Must be declared in ESLint globals and mocked in tests
-
-## Code Style & Conventions
+## Code Style & Critical Patterns
 
 ### TypeScript Patterns
-- Always define interfaces for component props (even if empty: `interface ComponentProps {}`)
-- Prefix unused parameters with underscore: `function Component(_props: Props)`
-- Use JSDoc comments for all components and exported functions
-- Include `@example` blocks in JSDoc
+- Always define interfaces for props (even if empty)
+- Prefix unused parameters with underscore: `_props`
+- JSDoc comments required for all exported functions with `@example` blocks
+- Use `ComponentChildren` from 'preact' for child props
 
-### Component Structure
+### Component Pattern
 ```typescript
 /**
- * JSDoc description
- * @param props - Description
- * @returns Description
+ * Component description
+ * @param props - Props description
+ * @returns JSX element
  * @example
  * ```tsx
- * <ComponentName />
+ * <ComponentName className="custom" />
  * ```
  */
-export function ComponentName(_props: ComponentProps) {
-  // component logic
+export function ComponentName({ className, ...rest }: ComponentProps) {
+  return <element className={`base-class ${className || ''}`} {...rest} />
 }
 ```
 
-### File Extensions
-- Use `.tsx` for components (even without JSX)
-- Use `.ts` for utilities and stores
-- Use `.scss` for styles
+### SCSS Patterns
+- Use `@use '../index.scss' as *;` for design system variables
+- Responsive queries: mobile-first with min-width
+- Color functions: `color.scale()`, `color.change()` from Sass
+- CSS custom properties for theme variables
+- BEM-like class naming for components
 
-## Build & Deployment Specifics
+### Critical Global Variables
+- `__APP_VERSION__` injected by Vite from package.json
+- Must be declared in vite-env.d.ts and mocked in tests
 
-- Vite builds to `public/` directory (not typical `dist/`)
-- Coverage reports and docs also output to `public/` subdirectories
-- `public/index.html` exists but main entry is root `index.html`
-- Uses modern SCSS compiler API in Vite config
-
-## Testing Considerations
-- Global test setup in `src/test/setup.ts` configures Testing Library and mocks
-- Vitest runs in jsdom environment with globals enabled
-- Store mocking pattern is critical for component testing
+## Key Files & Integration Points
+- `src/index.scss` - Global styles and design system variables
+- `src/UI/index.ts` - UI component barrel export
+- `vite.config.ts` - Path aliases and build configuration
+- `src/test/setup.ts` - Global test configuration
+- `src/App/App.scss` - Main responsive layout system

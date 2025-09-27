@@ -2,7 +2,7 @@
 
 Lista komponentów UI pozwalających zbudować kompletny layout aplikacji zgodnie z zasadami projektu. Każdy komponent zawiera pełną checklistę implementacyjną.
 
-## Komponenty Layout
+## Komponenty Layout Header
 
 ### Header
 
@@ -14,12 +14,12 @@ Komponent nagłówka strony/aplikacji.
 - [x] Dodaj `types.ts` z interfejsem `HeaderProps`:
   - `children?: ComponentChildren` (opcjonalne dzieci)
   - `title?: string` (opcjonalny tytuł)
-  - `titleLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'` (poziom tytułu, domyślnie 'h1')
+  - [x] `titleLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'` (poziom tytułu, domyślnie 'h1')
   - `className?: string` (dodatkowa klasa CSS)
   - `[key: string]: any` (dodatkowe props)
 - [x] Zaimplementuj `Header.tsx`:
   - Użyj semantycznego elementu `<header>`
-  - Dynamiczne tworzenie tytułu za pomocą `createElement`
+  - [x] Dynamiczne tworzenie tytułu za pomocą `createElement`
   - Pełna dokumentacja TSDoc z przykładem użycia
   - Obsługa wszystkich props z `HeaderProps`
 - [x] Dodaj style w `Header.scss`:
@@ -42,7 +42,7 @@ Komponent nagłówka strony/aplikacji.
 
 Główny komponent zawartości strony.
 
-#### Checklist Implementacji
+#### Checklist Implementacji Main
 
 - [x] Utwórz folder `src/UI/Main/`
 - [x] Dodaj `types.ts` z interfejsem `MainProps`:
@@ -71,7 +71,7 @@ Główny komponent zawartości strony.
 
 Komponent dla sekcji artykułu/treści.
 
-#### Checklist Implementacji
+#### Checklist Implementacji Article
 
 - [x] Utwórz folder `src/UI/Article/`
 - [x] Dodaj `types.ts` z interfejsem `ArticleProps`:
@@ -108,7 +108,7 @@ Komponent dla sekcji artykułu/treści.
 
 Komponent stopki strony/aplikacji.
 
-#### Checklist Implementacji
+#### Checklist Implementacji Footer
 
 - [x] Utwórz folder `src/UI/Footer/`
 - [x] Dodaj `types.ts` z interfejsem `FooterProps`:
@@ -137,7 +137,7 @@ Komponent stopki strony/aplikacji.
 
 Komponent dla sekcji treści.
 
-#### Checklist Implementacji
+#### Checklist Implementacji Section
 
 - [x] Utwórz folder `src/UI/Section/`
 - [x] Dodaj `types.ts` z interfejsem `SectionProps`:
@@ -166,7 +166,7 @@ Komponent dla sekcji treści.
 
 Komponent dla zawartości pobocznej (sidebar).
 
-#### Checklist Implementacji
+#### Checklist Implementacji Aside
 
 - [x] Utwórz folder `src/UI/Aside/`
 - [x] Dodaj `types.ts` z interfejsem `AsideProps`:
@@ -196,7 +196,7 @@ Komponent dla zawartości pobocznej (sidebar).
 
 Komponent nawigacji.
 
-#### Checklist Implementacji
+#### Checklist Implementacji Nav
 
 - [x] Utwórz folder `src/UI/Nav/`
 - [x] Dodaj `types.ts` z interfejsem `NavProps`:

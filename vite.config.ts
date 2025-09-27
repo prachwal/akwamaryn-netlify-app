@@ -22,7 +22,7 @@ const baseConfig = defineConfig(({ command }) => ({
       '@stores': resolve(__dirname, 'src/stores'),
       '@hooks': resolve(__dirname, 'src/hooks'),
       '@utils': resolve(__dirname, 'src/utils'),
-      '@styles': resolve(__dirname, 'src/styles'),
+      '@styles': resolve(__dirname, 'src/UI/styles'),
       '@mytypes': resolve(__dirname, 'src/types'),
     },
   },

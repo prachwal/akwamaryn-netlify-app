@@ -27,6 +27,12 @@ describe('Header', () => {
     expect(title).toHaveTextContent('Test Title');
   });
 
+  it('renders title with custom level', () => {
+    render(<Header title="Test Title" titleLevel="h3">Test content</Header>);
+    const title = screen.getByRole('heading', { level: 3 });
+    expect(title).toHaveTextContent('Test Title');
+  });
+
   it('does not render title when not provided', () => {
     render(<Header>Test content</Header>);
     const headings = screen.queryAllByRole('heading');

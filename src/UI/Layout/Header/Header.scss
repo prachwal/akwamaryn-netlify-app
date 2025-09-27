@@ -1,18 +1,26 @@
 @use 'sass:color' as color;
-@use '../../index.scss' as *;
+@use '@styles/index.scss' as *;
 
-.aside {
-  width: 300px;
+.header {
   padding: 1rem;
-  border: 1px solid color.scale($light-text, $lightness: -30%);
-  border-radius: 8px;
+  border-bottom: 1px solid color.scale($light-text, $lightness: -30%);
   background-color: $card-dark-bg;
   box-shadow: 0 2px 4px color.change($dark-bg, $alpha: 0.1);
-  margin: 1rem 0;
+  margin-bottom: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100; // Keep header above content
+
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 600;
+    line-height: 1.2;
+  }
 }
 
 @media (prefers-color-scheme: light) {
-  .aside {
+  .header {
     background-color: $card-light-bg;
     border-color: color.scale($dark-text, $lightness: -30%);
     box-shadow: 0 2px 4px color.change($light-text, $alpha: 0.1);
@@ -21,27 +29,23 @@
 
 // Responsive design for different screen sizes
 @media (max-width: $tablet) {
-  .aside {
-    width: 250px;
+  .header {
     padding: 0.75rem;
-    margin: 0.5rem 0;
-    border-radius: 6px;
+    margin-bottom: 0.75rem;
   }
 }
 
 @media (max-width: $small) {
-  .aside {
-    width: 100%;
+  .header {
     padding: 0.5rem;
-    margin: 0.25rem 0;
+    margin-bottom: 0.5rem;
   }
 }
 
 // Orientation-specific adjustments
 @media (orientation: landscape) and (max-height: 500px) {
-  .aside {
-    width: 100%;
+  .header {
     padding: 0.5rem;
-    margin: 0.25rem 0;
+    margin-bottom: 0.25rem;
   }
 }

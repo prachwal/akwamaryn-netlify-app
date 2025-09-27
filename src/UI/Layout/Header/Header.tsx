@@ -1,3 +1,5 @@
+import { createElement } from 'preact';
+
 import './Header.scss';
 import type { HeaderProps } from './types';
 
@@ -9,25 +11,26 @@ import type { HeaderProps } from './types';
  *
  * @example
  * ```tsx
- * <Header title="My Site" className="main-header">
+ * <Header title="My Site" titleLevel="h1" className="main-header">
  *   <nav>Navigation</nav>
  * </Header>
  * ```
  *
  * @example
  * ```tsx
- * <Header title="My Site" />
+ * <Header title="My Site" titleLevel="h2" />
  * ```
  */
 export function Header({
   children,
   title,
+  titleLevel = 'h1',
   className,
   ...rest
 }: HeaderProps) {
   return (
     <header className={`header ${className || ''}`} {...rest}>
-      {title && <h1>{title}</h1>}
+      {title && createElement(titleLevel, {}, title)}
       {children && children}
     </header>
   );
