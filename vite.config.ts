@@ -8,7 +8,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const packageJson = JSON.parse(readFileSync(join(__dirname, 'package.json'), 'utf-8'))
 
 // https://vitejs.dev/config/
-const baseConfig = defineConfig({
+const baseConfig = defineConfig(({ command }) => ({
+  base: command === 'build' ? '/akwamaryn-netlify-app/' : '/',
   plugins: [preact()],
   define: {
     __APP_VERSION__: JSON.stringify(packageJson.version),
@@ -31,6 +32,6 @@ const baseConfig = defineConfig({
       scss: {},
     },
   },
-})
+}))
 
 export default baseConfig
