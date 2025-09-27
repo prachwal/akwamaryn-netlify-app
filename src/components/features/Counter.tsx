@@ -1,9 +1,11 @@
-import { useCounterStore } from '@/stores/counterStore'
+import { useCounterStore } from '@stores/counterStore'
 
 /**
  * Props for the Counter component
  */
-interface CounterProps {}
+export interface CounterProps {
+  /** No props currently defined */
+}
 
 /**
  * Counter component that displays and increments a counter using Zustand store

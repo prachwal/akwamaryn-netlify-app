@@ -1,0 +1,6 @@
+{
+  "out": "public/docs",
+  "entryPoints": ["src"],
+  "entryPointStrategy": "expand",
+  "exclude": ["**/*.test.*"]
+}

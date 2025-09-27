@@ -4,12 +4,14 @@ import { Counter } from '@components/features/Counter'
 /**
  * Props for the App component
  */
-interface AppProps {}
+export interface AppProps {
+  /** No props currently defined */
+}
 
 /**
  * Main application component
  *
- * @param props - Component props (currently empty)
+ * @param _props - Component props (currently empty)
  * @returns The main app JSX element
  *
  * @example

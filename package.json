@@ -10,7 +10,7 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
-    "docs": "typedoc --out public/docs src --entryPointStrategy expand --exclude \"**/*.test.*\"",
+    "docs": "typedoc",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix"
   },

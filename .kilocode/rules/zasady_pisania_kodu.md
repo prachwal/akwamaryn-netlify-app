@@ -7,10 +7,10 @@ Reguły obowiązujące w projekcie dotyczące jakości kodu, testowania i strukt
 ### Technologie Kluczowe
 
 - **Frontend**: Preact (nie React) z TypeScript i SCSS
-- **Narzędzie Budowania**: Vite z konfiguracją wyjściową do katalogu `public/`
+- **Narzędzie Budowania**: Vite z konfiguracją wyjściową do katalogu `dist/`
 - **Zarządzanie Stanem**: Sklepy Zustand (zobacz `src/stores/`)
 - **Testowanie**: Vitest + Testing Library + jsdom
-- **Wdrożenie**: Netlify (build wychodzi do `public/`)
+- **Wdrożenie**: Netlify (build wychodzi do `dist/`)
 
 ## Organizacja Projektu
 
@@ -147,11 +147,26 @@ import { useCounterStore } from '@stores/counterStore'
 ### Dostępne Komendy
 
 - `npm run dev` - Uruchom serwer deweloperski
+- `npm run build` - Zbuduj projekt do produkcji
+- `npm run preview` - Podgląd zbudowanej aplikacji
 - `npm run test` - Uruchom testy w trybie watch
 - `npm run test:ui` - Uruchom testy z dashboardem UI
-- `npm run coverage` - Generuj raporty pokrycia testami (wychodzi do `public/coverage/`)
-- `npm run docs` - Generuj dokumentację TypeDoc (wychodzi do `public/docs/`)
+- `npm run coverage` - Generuj raporty pokrycia testami (wychodzi do `coverage/`)
+- `npm run docs` - Generuj dokumentację TypeDoc (wychodzi do `docs/`)
 - `npm run lint` / `npm run lint:fix` - Sprawdzanie/naprawianie ESLint
+
+### CI Pipeline
+
+Projekt używa GitHub Actions dla automatycznego CI:
+
+- **Testowanie**: Uruchamiane na push do `main` i pull requestach
+- **Macierze testów**: Testy na Node.js 20.x i 22.x
+- **Kroki CI**:
+  - Instalacja zależności
+  - Sprawdzanie kodu (linting)
+  - Uruchomienie testów z pokryciem (Vitest + v8 coverage, wykluczając `public/`)
+  - Budowanie projektu (wyjście do `dist/`)
+  - Wysłanie raportów pokrycia do Codecov (format LCOV)
 
 ### Zmienne Globalne
 

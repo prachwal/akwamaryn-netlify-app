@@ -24,7 +24,7 @@ const baseConfig = defineConfig({
     },
   },
   build: {
-    outDir: 'public',
+    outDir: 'dist',
   },
   css: {
     preprocessorOptions: {

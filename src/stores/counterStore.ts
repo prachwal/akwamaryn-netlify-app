@@ -3,8 +3,10 @@ import { create } from 'zustand'
 /**
  * Interface for the counter store state
  */
-interface CounterState {
+export interface CounterState {
+  /** Current count value */
   count: number
+  /** Function to increment the count */
   increment: () => void
 }
 
