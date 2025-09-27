@@ -18,10 +18,13 @@ Reguły obowiązujące w projekcie dotyczące jakości kodu, testowania i strukt
 
 ```text
 src/
-├── components/
-│   ├── ui/           # Wielokrotnego użytku komponenty UI
-│   ├── layout/       # Komponenty layoutu
-│   └── features/     # Komponenty specyficzne dla funkcji
+├── App/
+│   ├── App.tsx       # Główny komponent aplikacji
+│   ├── App.scss      # Style dla głównego komponentu
+│   ├── App.test.tsx  # Testy dla głównego komponentu
+│   └── components/
+│       └── features/     # Komponenty specyficzne dla funkcji aplikacji
+├── UI/               # Wielokrotnego użytku komponenty UI (przygotowane na wydzielenie jako osobny podkomponent)
 ├── hooks/            # Własne hooki
 ├── stores/           # Sklepy Zustand
 ├── utils/            # Funkcje narzędziowe
@@ -30,8 +33,10 @@ src/
 
 ### Komponenty
 
-- Komponenty żyją w `src/components/` z współlokalizowanymi stylami i testami
-- Komponenty funkcji idą do `src/components/features/`
+- Główny komponent aplikacji znajduje się w `src/App/App.tsx`
+- Komponenty aplikacji żyją w `src/App/components/` z współlokalizowanymi stylami i testami
+- Komponenty funkcji aplikacji idą do `src/App/components/features/`
+- Komponenty UI wielokrotnego użytku są w `src/UI/` (przygotowane na wydzielenie jako osobny podkomponent)
 - Każdy komponent ma własny folder: `ComponentName/ComponentName.tsx`, `ComponentName.scss`, `ComponentName.test.tsx`
 - Używaj nazwanych eksportów: `export function ComponentName()` nie domyślnych eksportów
 
@@ -69,30 +74,42 @@ Importy postępują zgodnie ze ścisłym porządkiem wymuszanym przez ESLint:
 **Przykładowa struktura importów w plikach testowych:**
 
 ```typescript
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { renderHook, waitFor } from '@testing-library/preact'
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen } from '@testing-library/preact';
+import { useGeolocation } from '@hooks/useGeolocation';
 
-import { useGeolocation } from './useGeolocation'
+import { GeolocationDisplay } from './GeolocationDisplay';
 
-// Mock fetch globally
+// Mock the useGeolocation hook
+vi.mock('@hooks/useGeolocation', () => ({
+  useGeolocation: vi.fn(),
+}));
 ```
+
+**Uwagi dla plików testowych:**
+
+- W plikach testowych, mocki hooków i komponentów są umieszczane po importach, przed definicjami testów.
+- Nie dodawaj pustej linii między grupami importów zewnętrznych i wewnętrznych w plikach testowych.
 
 ### Aliasy Ścieżek
 
 Używaj aliasów ścieżek dla krótszych i bardziej czytelnych importów:
 
 - `@/` - `src/`
-- `@components/` - `src/components/`
+- `@components/` - `src/App/components/`
+- `@ui/` - `src/UI/`
 - `@stores/` - `src/stores/`
 - `@hooks/` - `src/hooks/`
 - `@utils/` - `src/utils/`
 - `@styles/` - `src/styles/`
+- `@mytypes/` - `src/types/`
 
 Przykład:
 
 ```typescript
 import { Counter } from '@components/features/Counter'
 import { useCounterStore } from '@stores/counterStore'
+import type { GeolocationResponse } from '@mytypes/index'
 ```
 
 ## Zasady TypeScript
@@ -229,3 +246,42 @@ Projekt używa GitHub Actions dla automatycznego CI:
 - Używaj opisowych nazw branchy (feature/, bugfix/, hotfix/)
 - Trzymaj branchy skoncentrowane na pojedynczych funkcjach lub naprawach
 - Regularnie synchronizuj z główną branchą
+
+## Historia Poprawek
+
+### Poprawki Importów w Plikach Testowych
+
+- **Data**: 2025-09-27
+- **Opis**: Zaktualizowano strukturę importów w plikach testowych. Mocki hooków i komponentów są teraz umieszczane po wszystkich importach, przed definicjami testów. Usunięto wymóg pustej linii między grupami importów zewnętrznych i wewnętrznych w plikach testowych, aby uniknąć błędów ESLint i poprawić czytelność.
+- **Przykład przed poprawką**:
+
+  ```typescript
+  import { describe, it, expect, vi, beforeEach } from 'vitest';
+  import { render, screen } from '@testing-library/preact';
+
+  // Mock the useGeolocation hook
+  vi.mock('@hooks/useGeolocation', () => ({
+    useGeolocation: vi.fn(),
+  }));
+
+  import { useGeolocation } from '@hooks/useGeolocation';
+
+  import { GeolocationDisplay } from './GeolocationDisplay';
+  ```
+
+- **Przykład po poprawce**:
+
+  ```typescript
+  import { describe, it, expect, vi, beforeEach } from 'vitest';
+  import { render, screen } from '@testing-library/preact';
+  import { useGeolocation } from '@hooks/useGeolocation';
+
+  import { GeolocationDisplay } from './GeolocationDisplay';
+
+  // Mock the useGeolocation hook
+  vi.mock('@hooks/useGeolocation', () => ({
+    useGeolocation: vi.fn(),
+  }));
+  ```
+
+- **Powód**: Poprawka zapewnia lepszą organizację kodu w testach, gdzie wszystkie importy są grupowane razem, a mocki są wyraźnie oddzielone. Eliminuje również konflikty z regułami ESLint dotyczącymi pustych linii między grupami importów.

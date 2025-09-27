@@ -1,0 +1,45 @@
+@use 'sass:color' as color;
+@use '../../index.scss' as *;
+
+.footer {
+  padding: 1rem;
+  border-top: 1px solid color.scale($light-text, $lightness: -30%);
+  background-color: $card-dark-bg;
+  box-shadow: 0 -2px 4px color.change($dark-bg, $alpha: 0.1);
+  margin-top: 1rem;
+
+  p {
+    margin: 0.25rem 0;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .footer {
+    background-color: $card-light-bg;
+    border-color: color.scale($dark-text, $lightness: -30%);
+    box-shadow: 0 -2px 4px color.change($light-text, $alpha: 0.1);
+  }
+}
+
+// Responsive design for different screen sizes
+@media (max-width: $tablet) {
+  .footer {
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: $small) {
+  .footer {
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+  }
+}
+
+// Orientation-specific adjustments
+@media (orientation: landscape) and (max-height: 500px) {
+  .footer {
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+  }
+}

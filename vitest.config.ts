@@ -15,11 +15,13 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
-      '@components': resolve(__dirname, 'src/components'),
+      '@components': resolve(__dirname, 'src/App/components'),
       '@stores': resolve(__dirname, 'src/stores'),
       '@hooks': resolve(__dirname, 'src/hooks'),
       '@utils': resolve(__dirname, 'src/utils'),
       '@styles': resolve(__dirname, 'src/styles'),
+      '@mytypes': resolve(__dirname, 'src/types'),
+      '@ui': resolve(__dirname, 'src/UI'),
     },
   },
   test: {

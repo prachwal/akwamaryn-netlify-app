@@ -1,0 +1,32 @@
+@use 'sass:color' as color;
+@use '../../index.scss' as *;
+
+.main {
+  padding: 1rem;
+  margin: 0 auto;
+  max-width: 1200px;
+
+  // Ensure main takes full width on small screens
+  width: 100%;
+  box-sizing: border-box;
+}
+
+// Responsive design for different screen sizes
+@media (max-width: $tablet) {
+  .main {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: $small) {
+  .main {
+    padding: 0.5rem;
+  }
+}
+
+// Orientation-specific adjustments
+@media (orientation: landscape) and (max-height: 500px) {
+  .main {
+    padding: 0.5rem;
+  }
+}

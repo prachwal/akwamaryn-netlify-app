@@ -1,0 +1,47 @@
+@use 'sass:color' as color;
+@use '../../index.scss' as *;
+
+.header {
+  padding: 1rem;
+  border-bottom: 1px solid color.scale($light-text, $lightness: -30%);
+  background-color: $card-dark-bg;
+  box-shadow: 0 2px 4px color.change($dark-bg, $alpha: 0.1);
+  margin-bottom: 1rem;
+
+  h1 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .header {
+    background-color: $card-light-bg;
+    border-color: color.scale($dark-text, $lightness: -30%);
+    box-shadow: 0 2px 4px color.change($light-text, $alpha: 0.1);
+  }
+}
+
+// Responsive design for different screen sizes
+@media (max-width: $tablet) {
+  .header {
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: $small) {
+  .header {
+    padding: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+}
+
+// Orientation-specific adjustments
+@media (orientation: landscape) and (max-height: 500px) {
+  .header {
+    padding: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+}

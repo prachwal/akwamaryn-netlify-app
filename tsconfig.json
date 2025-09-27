@@ -19,11 +19,13 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@components/*": ["src/components/*"],
+      "@components/*": ["src/App/components/*"],
+      "@ui/*": ["src/UI/*"],
       "@stores/*": ["src/stores/*"],
       "@hooks/*": ["src/hooks/*"],
       "@utils/*": ["src/utils/*"],
-      "@styles/*": ["src/styles/*"]
+      "@styles/*": ["src/styles/*"],
+      "@mytypes/*": ["src/types/*"]
     },
 
     /* Linting */

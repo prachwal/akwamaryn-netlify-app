@@ -1,0 +1,49 @@
+@use 'sass:color' as color;
+@use '../../index.scss' as *;
+
+.card {
+  padding: 1rem;
+  border: 1px solid color.scale($light-text, $lightness: -30%);
+  border-radius: 8px;
+  background-color: $card-dark-bg;
+  box-shadow: 0 2px 4px color.change($dark-bg, $alpha: 0.1);
+  margin: 1rem 0;
+
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .card {
+    background-color: $card-light-bg;
+    border-color: color.scale($dark-text, $lightness: -30%);
+    box-shadow: 0 2px 4px color.change($light-text, $alpha: 0.1);
+  }
+}
+
+// Responsive design for different screen sizes
+@media (max-width: $tablet) {
+  .card {
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: $small) {
+  .card {
+    padding: 0.5rem;
+    margin: 0.25rem 0;
+  }
+}
+
+// Orientation-specific adjustments
+@media (orientation: landscape) and (max-height: 500px) {
+  .card {
+    padding: 0.5rem;
+    margin: 0.25rem 0;
+  }
+}

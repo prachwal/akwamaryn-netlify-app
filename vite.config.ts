@@ -17,11 +17,13 @@ const baseConfig = defineConfig(({ command }) => ({
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
-      '@components': resolve(__dirname, 'src/components'),
+      '@components': resolve(__dirname, 'src/App/components'),
+      '@ui': resolve(__dirname, 'src/UI'),
       '@stores': resolve(__dirname, 'src/stores'),
       '@hooks': resolve(__dirname, 'src/hooks'),
       '@utils': resolve(__dirname, 'src/utils'),
       '@styles': resolve(__dirname, 'src/styles'),
+      '@mytypes': resolve(__dirname, 'src/types'),
     },
   },
   build: {

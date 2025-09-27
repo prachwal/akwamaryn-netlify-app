@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'preact/hooks'
-
-import type { GeolocationResponse } from '../../netlify/types/geolocation'
+import type { GeolocationResponse } from '@mytypes/index'
 
 /**
  * Hook for fetching geolocation data from Netlify Edge Function

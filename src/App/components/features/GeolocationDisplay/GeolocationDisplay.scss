@@ -1,0 +1,13 @@
+@use 'sass:color' as color;
+@use '../../../../index.scss' as *;
+
+.geolocation-display {
+  // Specific styles for geolocation display
+  p {
+    margin: 0.5rem 0;
+  }
+
+  strong {
+    color: $primary-color;
+  }
+}
