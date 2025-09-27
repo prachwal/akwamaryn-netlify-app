@@ -484,24 +484,78 @@
   }
 }
 
+// Tech stack table styling
+.tech-stack-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+
+  th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid color.scale($light-text, $lightness: -20%);
+  }
+
+  th {
+    background-color: color.change($primary-color, $alpha: 0.1);
+    font-weight: 600;
+    color: $primary-color;
+  }
+
+  tbody tr {
+    &:hover {
+      background-color: color.change($primary-color, $alpha: 0.05);
+    }
+
+    &:last-child td {
+      border-bottom: none;
+    }
+  }
+
+  .version-badge {
+    font-weight: bold;
+    color: $primary-color;
+    background-color: color.change($primary-color, $alpha: 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .tech-stack-table {
+    th, td {
+      border-color: color.scale($dark-text, $lightness: -20%);
+    }
+
+    th {
+      background-color: color.change($primary-color, $alpha: 0.05);
+    }
+
+    tbody tr:hover {
+      background-color: color.change($primary-color, $alpha: 0.03);
+    }
+  }
+}
+
 // Very small screens (≤320px)
 @media (max-width: 320px) {
   .app-header {
     .header-content {
       padding: 0 0.375rem;
     }
-    
+
     h1 {
       font-size: 1.125rem;
       margin-right: 0.5rem;
     }
-    
+
     .mobile-hamburger {
       width: 20px;
       height: 15px;
     }
   }
-  
+
   .mobile-menu {
     width: calc(100vw - 1rem);
   }

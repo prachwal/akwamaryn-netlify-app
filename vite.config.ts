@@ -13,6 +13,11 @@ const baseConfig = defineConfig(({ command }) => ({
   plugins: [preact()],
   define: {
     __APP_VERSION__: JSON.stringify(packageJson.version),
+    __PREACT_VERSION__: JSON.stringify(packageJson.devDependencies.preact),
+    __TYPESCRIPT_VERSION__: JSON.stringify(packageJson.devDependencies.typescript),
+    __VITE_VERSION__: JSON.stringify(packageJson.devDependencies.vite),
+    __SCSS_VERSION__: JSON.stringify(packageJson.devDependencies.sass),
+    __VITEST_VERSION__: JSON.stringify(packageJson.devDependencies.vitest),
   },
   resolve: {
     alias: {

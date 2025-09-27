@@ -7,6 +7,9 @@
 // Card component
 export { Card, type CardProps } from './Card';
 
+// Tooltip component
+export { Tooltip, type TooltipProps } from './Tooltip';
+
 // Layout components
 export { Header, type HeaderProps } from './Layout/Header';
 export { Main, type MainProps } from './Layout/Main';
