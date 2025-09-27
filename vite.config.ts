@@ -9,7 +9,7 @@ const packageJson = JSON.parse(readFileSync(join(__dirname, 'package.json'), 'ut
 
 // https://vitejs.dev/config/
 const baseConfig = defineConfig(({ command }) => ({
-  base: command === 'build' ? '/akwamaryn-netlify-app/' : '/',
+  base: command === 'build' && process.env.GITHUB_ACTIONS ? '/akwamaryn-netlify-app/' : '/',
   plugins: [preact()],
   define: {
     __APP_VERSION__: JSON.stringify(packageJson.version),
