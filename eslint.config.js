@@ -2,7 +2,6 @@ import js from '@eslint/js'
 import tseslint from '@typescript-eslint/eslint-plugin'
 import tsparser from '@typescript-eslint/parser'
 import importPlugin from 'eslint-plugin-import'
-import preactPlugin from 'eslint-plugin-preact'
 import jsdocPlugin from 'eslint-plugin-jsdoc'
 
 export default [
@@ -29,7 +28,6 @@ export default [
     plugins: {
       '@typescript-eslint': tseslint,
       import: importPlugin,
-      preact: preactPlugin,
       jsdoc: jsdocPlugin,
     },
     rules: {
