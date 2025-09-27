@@ -1,0 +1,52 @@
+@use 'sass:color';
+@use '../../index.scss' as *;
+
+// App-specific styles
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  width: 100%;
+}
+
+.card {
+  // Additional styles for card if needed
+}
+
+.read-the-docs {
+  // Additional styles for read-the-docs if needed
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+}
+
+// Responsive adjustments
+// Small screens landscape
+@media (max-width: $tablet) and (orientation: landscape) {
+  .app-main {
+    padding: 1rem;
+  }
+
+  footer {
+    padding: 0.5rem;
+  }
+}
+
+// Very small screens
+@media (max-width: $small) {
+  .app-main {
+    padding: 1.5rem;
+  }
+
+  footer {
+    padding: 0.75rem;
+  }
+}

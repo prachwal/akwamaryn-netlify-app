@@ -1,0 +1,31 @@
+{
+  "name": "akwamaryn-netlify-app",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "coverage": "vitest run --coverage",
+    "docs": "typedoc --out public/docs src --entryPointStrategy expand --exclude \"**/*.test.*\""
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.8.2",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/preact": "^3.2.3",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/node": "^20.12.7",
+    "@vitest/coverage-v8": "^1.6.0",
+    "@vitest/ui": "^1.6.0",
+    "jsdom": "^24.0.0",
+    "preact": "^10.20.1",
+    "sass": "^1.77.2",
+    "typedoc": "^0.25.13",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11",
+    "vitest": "^1.6.0"
+  }
+}
