@@ -1,11 +1,20 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/preact'
 import userEvent from '@testing-library/user-event'
 
-import { App } from './components/App/App.tsx'
+import { App } from './App'
+
+// Mock the counter store
+const incrementMock = vi.fn()
+vi.mock('@stores/counterStore', () => ({
+  useCounterStore: () => ({
+    count: 0,
+    increment: incrementMock,
+  }),
+}))
 
 // Mock the version
-;(global as any).__APP_VERSION__ = '0.0.1'
+;(globalThis as unknown as { __APP_VERSION__: string }).__APP_VERSION__ = '0.0.1'
 
 describe('App', () => {
   it('renders', () => {
@@ -20,7 +29,7 @@ describe('App', () => {
 
     await user.click(button)
 
-    expect(screen.getByRole('button', { name: /count is 1/i })).toBeTruthy()
+    expect(incrementMock).toHaveBeenCalled()
   })
 
   it('displays version', () => {

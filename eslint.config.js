@@ -33,6 +33,7 @@ export default [
     rules: {
       // Custom rules for the project
       'no-console': 'warn',
+      'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
@@ -56,7 +57,15 @@ export default [
           selector: 'variableLike',
           format: ['camelCase', 'UPPER_CASE'],
           filter: {
-            regex: '^__.*__$',
+            regex: '^(__.*__|_.*)$',
+            match: false,
+          },
+        },
+        {
+          selector: 'parameter',
+          format: ['camelCase'],
+          filter: {
+            regex: '^_.*$',
             match: false,
           },
         },

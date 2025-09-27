@@ -29,10 +29,14 @@
     "eslint-plugin-jsdoc": "^60.4.1",
     "jsdom": "^24.0.0",
     "preact": "^10.20.1",
+    "react": "^19.1.1",
     "sass": "^1.77.2",
     "typedoc": "^0.25.13",
     "typescript": "^5.4.5",
     "vite": "^7.1.7",
     "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "zustand": "^5.0.8"
   }
 }

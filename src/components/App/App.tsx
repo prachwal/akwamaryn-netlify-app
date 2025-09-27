@@ -1,13 +1,23 @@
-import { useState } from 'preact/hooks'
 import './App.scss'
+import { Counter } from '@components/features/Counter'
+
+/**
+ * Props for the App component
+ */
+interface AppProps {}
 
 /**
  * Main application component
+ *
+ * @param props - Component props (currently empty)
  * @returns The main app JSX element
+ *
+ * @example
+ * ```tsx
+ * <App />
+ * ```
  */
-export function App() {
-  const [count, setCount] = useState(0)
-
+export function App(_props: AppProps) {
   return (
     <>
       <main className="app-main">
@@ -15,9 +25,7 @@ export function App() {
           <h1>Akwamaryn Netlify App</h1>
         </header>
         <section className="card">
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is {count}
-          </button>
+          <Counter />
           <p>
             Edit <code>src/App.tsx</code> and save to test HMR
           </p>

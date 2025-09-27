@@ -6,7 +6,7 @@ import * as matchers from '@testing-library/jest-dom/matchers'
 expect.extend(matchers)
 
 // Mock app version for tests
-;(global as any).__APP_VERSION__ = '0.0.1'
+;(globalThis as unknown as { __APP_VERSION__: string }).__APP_VERSION__ = '0.0.1'
 
 // runs a cleanup after each test case (e.g. clearing jsdom)
 afterEach(() => {
