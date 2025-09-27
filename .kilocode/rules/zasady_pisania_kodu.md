@@ -66,6 +66,17 @@ Importy postępują zgodnie ze ścisłym porządkiem wymuszanym przez ESLint:
 2. Importy wewnętrzne moduły (względne importy)
 3. Pusta linia między grupami
 
+**Przykładowa struktura importów w plikach testowych:**
+
+```typescript
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { renderHook, waitFor } from '@testing-library/preact'
+
+import { useGeolocation } from './useGeolocation'
+
+// Mock fetch globally
+```
+
 ### Aliasy Ścieżek
 
 Używaj aliasów ścieżek dla krótszych i bardziej czytelnych importów:

@@ -23,6 +23,7 @@ export default [
         __APP_VERSION__: 'readonly',
         global: 'readonly',
         document: 'readonly',
+        fetch: 'readonly',
       },
     },
     plugins: {
