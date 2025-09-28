@@ -20,7 +20,7 @@
   port = 3000             # Port that the dev server will be listening on
   publish = "dist"        # Folder with the static content for _redirect file
   framework = "vite"      # Framework to use for auto-detection, see https://ntl.fyi/dev-frameworks
-  targetPort = 5174       # Port that Netlify Dev will run on
+  targetPort = 5173       # Port that Netlify Dev will run on
 
   ## more info on configuring this file: https://ntl.fyi/file-based-build-config
 

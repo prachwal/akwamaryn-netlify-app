@@ -91,7 +91,7 @@ Podstawowe style z konwencjami nazewnictwa, używające zmiennych i funkcji Sass
 
 ```scss
 @use 'sass:color' as color;
-@use '../../index.scss' as *;
+@use '@styles/index.scss' as *;
 
 // Przykład zmiennych kolorów z src/index.scss:
 // $primary-color: #646cff;

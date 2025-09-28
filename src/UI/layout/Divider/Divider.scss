@@ -1,0 +1,96 @@
+@use 'sass:color' as color;
+@use '@styles/index.scss' as *;
+
+// Base divider styles
+.divider {
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+}
+
+// Orientation styles
+.divider--horizontal {
+  width: 100%;
+  height: 0;
+}
+
+.divider--vertical {
+  width: 0;
+  height: 100%;
+  align-self: stretch;
+}
+
+// Variant styles (border-style)
+.divider--solid {
+  border-style: solid;
+}
+
+.divider--dashed {
+  border-style: dashed;
+}
+
+.divider--dotted {
+  border-style: dotted;
+}
+
+// Thickness styles (border-width)
+.divider--thin {
+  border-width: 1px;
+}
+
+.divider--medium {
+  border-width: 2px;
+}
+
+.divider--thick {
+  border-width: 4px;
+}
+
+// Color styles (border-color)
+.divider--default {
+  border-color: color.scale($light-text, $lightness: -30%);
+}
+
+.divider--muted {
+  border-color: color.scale($light-text, $lightness: -15%);
+}
+
+.divider--accent {
+  border-color: $primary-color;
+}
+
+// Theme support for light mode
+@media (prefers-color-scheme: light) {
+  .divider--default {
+    border-color: color.scale($dark-text, $lightness: -30%);
+  }
+
+  .divider--muted {
+    border-color: color.scale($dark-text, $lightness: -15%);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: $tablet) {
+  .divider--thick {
+    border-width: 3px;
+  }
+}
+
+@media (max-width: $small) {
+  .divider--medium {
+    border-width: 1px;
+  }
+
+  .divider--thick {
+    border-width: 2px;
+  }
+}
+
+// Orientation-specific responsive adjustments
+@media (orientation: landscape) and (max-height: 500px) {
+  .divider--vertical {
+    height: 80%;
+  }
+}

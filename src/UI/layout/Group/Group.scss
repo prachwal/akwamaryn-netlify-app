@@ -1,0 +1,98 @@
+@use 'sass:color' as color;
+@use '@styles/index.scss' as *;
+
+// Group component styles
+.group {
+  display: flex;
+  border-radius: 8px;
+  padding: 1rem;
+
+  // Variant styles
+  &--default {
+    background-color: $card-dark-bg;
+    border: 1px solid color.scale($light-text, $lightness: -30%);
+
+    @media (prefers-color-scheme: light) {
+      background-color: $card-light-bg;
+      border-color: color.scale($dark-text, $lightness: -30%);
+    }
+  }
+
+  &--outlined {
+    background-color: transparent;
+    border: 2px solid color.scale($light-text, $lightness: -20%);
+
+    @media (prefers-color-scheme: light) {
+      border-color: color.scale($dark-text, $lightness: -20%);
+    }
+  }
+
+  &--filled {
+    background-color: color.scale($primary-color, $lightness: 40%);
+    border: 1px solid color.scale($primary-color, $lightness: 20%);
+    box-shadow: 0 2px 8px color.change($primary-color, $alpha: 0.2);
+  }
+
+  // Direction styles
+  &--vertical {
+    flex-direction: column;
+  }
+
+  &--horizontal {
+    flex-direction: row;
+  }
+
+  // Spacing styles
+  &--none {
+    gap: 0;
+  }
+
+  &--sm {
+    gap: 0.5rem;
+  }
+
+  &--md {
+    gap: 1rem;
+  }
+
+  &--lg {
+    gap: 1.5rem;
+  }
+}
+
+// Responsive design
+@media (max-width: $tablet) {
+  .group {
+    padding: 0.75rem;
+    border-radius: 6px;
+
+    &--lg {
+      gap: 1rem;
+    }
+  }
+}
+
+@media (max-width: $small) {
+  .group {
+    padding: 0.5rem;
+    border-radius: 4px;
+
+    &--md {
+      gap: 0.75rem;
+    }
+
+    &--lg {
+      gap: 0.75rem;
+    }
+  }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .group {
+    padding: 0.5rem;
+
+    &--lg {
+      gap: 0.75rem;
+    }
+  }
+}
